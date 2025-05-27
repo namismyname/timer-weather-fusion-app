@@ -98,13 +98,13 @@ const Index = () => {
   const getWeatherIcon = (weatherMain) => {
     switch (weatherMain?.toLowerCase()) {
       case 'rain':
-        return <CloudRain className="w-12 h-12 text-blue-400" />;
+        return <CloudRain className="w-16 h-16 text-blue-400" />;
       case 'snow':
-        return <CloudSnow className="w-12 h-12 text-blue-200" />;
+        return <CloudSnow className="w-16 h-16 text-blue-200" />;
       case 'clouds':
-        return <Cloud className="w-12 h-12 text-gray-400" />;
+        return <Cloud className="w-16 h-16 text-gray-400" />;
       default:
-        return <Sun className="w-12 h-12 text-yellow-400" />;
+        return <Sun className="w-16 h-16 text-yellow-400" />;
     }
   };
 
@@ -148,45 +148,46 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-pink-800 p-4">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 p-6">
       {/* Language Selector */}
-      <div className="fixed top-4 right-4 z-10">
+      <div className="fixed top-6 right-6 z-50">
         <Select value={language} onValueChange={setLanguage}>
-          <SelectTrigger className="w-20 bg-white/10 backdrop-blur-md border-white/20 text-white">
-            <Globe className="w-4 h-4" />
+          <SelectTrigger className="w-24 bg-white/10 backdrop-blur-lg border-white/20 text-white hover:bg-white/20 transition-all duration-300">
+            <Globe className="w-4 h-4 mr-1" />
+            <SelectValue />
           </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="en">EN</SelectItem>
-            <SelectItem value="vi">VI</SelectItem>
+          <SelectContent className="bg-white/95 backdrop-blur-lg border-white/20">
+            <SelectItem value="en" className="hover:bg-blue-50">EN</SelectItem>
+            <SelectItem value="vi" className="hover:bg-blue-50">VI</SelectItem>
           </SelectContent>
         </Select>
       </div>
 
-      <div className="max-w-6xl mx-auto space-y-6">
+      <div className="max-w-7xl mx-auto space-y-8">
         {/* Header */}
-        <div className="text-center py-8">
-          <h1 className="text-4xl md:text-6xl font-bold text-white mb-4 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+        <div className="text-center py-12">
+          <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-fade-in">
             Multi-Function Timer
           </h1>
-          <p className="text-xl text-white/80">Clock • Weather • Countdown</p>
+          <p className="text-2xl text-white/80 font-light">Clock • Weather • Countdown</p>
         </div>
 
         {/* Main Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Current Time */}
-          <Card className="bg-white/10 backdrop-blur-md border-white/20 p-6 text-white">
-            <div className="flex items-center justify-center mb-4">
-              <Clock className="w-8 h-8 mr-2 text-blue-400" />
-              <h2 className="text-2xl font-bold">{t.currentTime}</h2>
+          <Card className="bg-white/10 backdrop-blur-xl border-white/20 p-8 text-white shadow-2xl hover:bg-white/15 transition-all duration-300 group">
+            <div className="flex items-center justify-center mb-6">
+              <Clock className="w-10 h-10 mr-3 text-blue-400 group-hover:scale-110 transition-transform duration-300" />
+              <h2 className="text-3xl font-bold">{t.currentTime}</h2>
             </div>
-            <div className="text-center">
-              <div className="text-4xl font-mono font-bold mb-2">
+            <div className="text-center space-y-4">
+              <div className="text-5xl font-mono font-bold mb-4 text-blue-100 tracking-wider">
                 {currentTime.toLocaleTimeString('en-US', { 
                   hour12: false,
                   timeZone: 'Asia/Ho_Chi_Minh'
                 })}
               </div>
-              <div className="text-lg text-white/80">
+              <div className="text-xl text-white/80 font-medium">
                 {currentTime.toLocaleDateString('vi-VN', {
                   weekday: 'long',
                   year: 'numeric',
@@ -199,43 +200,43 @@ const Index = () => {
           </Card>
 
           {/* Weather */}
-          <Card className="bg-white/10 backdrop-blur-md border-white/20 p-6 text-white">
-            <div className="flex items-center justify-center mb-4">
-              <CloudRain className="w-8 h-8 mr-2 text-blue-400" />
-              <h2 className="text-2xl font-bold">{t.weather}</h2>
+          <Card className="bg-white/10 backdrop-blur-xl border-white/20 p-8 text-white shadow-2xl hover:bg-white/15 transition-all duration-300 group">
+            <div className="flex items-center justify-center mb-6">
+              <CloudRain className="w-10 h-10 mr-3 text-blue-400 group-hover:scale-110 transition-transform duration-300" />
+              <h2 className="text-3xl font-bold">{t.weather}</h2>
             </div>
             
-            <div className="flex gap-2 mb-4">
+            <div className="flex gap-3 mb-6">
               <Input
                 placeholder={t.searchCity}
                 value={searchCity}
                 onChange={(e) => setSearchCity(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && handleCitySearch()}
-                className="bg-white/20 border-white/30 text-white placeholder-white/60"
+                className="bg-white/20 border-white/30 text-white placeholder-white/60 focus:bg-white/25 transition-all duration-300"
               />
               <Button 
                 onClick={handleCitySearch}
-                className="bg-blue-600 hover:bg-blue-700"
+                className="bg-blue-600 hover:bg-blue-700 px-4 transition-all duration-300 hover:scale-105"
               >
-                <Search className="w-4 h-4" />
+                <Search className="w-5 h-5" />
               </Button>
             </div>
 
             {weather && (
-              <div className="text-center">
-                <div className="flex justify-center mb-4">
+              <div className="text-center space-y-4">
+                <div className="flex justify-center mb-6">
                   {getWeatherIcon(weather.weather[0].main)}
                 </div>
-                <h3 className="text-xl font-bold mb-2">{weather.name}</h3>
-                <div className="text-3xl font-bold mb-4">{Math.round(weather.main.temp)}°C</div>
-                <div className="space-y-2 text-sm">
-                  <div className="flex justify-between">
-                    <span>{t.humidity}:</span>
-                    <span>{weather.main.humidity}%</span>
+                <h3 className="text-2xl font-bold mb-3">{weather.name}</h3>
+                <div className="text-4xl font-bold mb-6 text-blue-100">{Math.round(weather.main.temp)}°C</div>
+                <div className="space-y-3 text-base">
+                  <div className="flex justify-between items-center p-2 bg-white/10 rounded-lg">
+                    <span className="font-medium">{t.humidity}:</span>
+                    <span className="text-blue-200">{weather.main.humidity}%</span>
                   </div>
-                  <div className="flex justify-between">
-                    <span>{t.windSpeed}:</span>
-                    <span>{weather.wind.speed} m/s</span>
+                  <div className="flex justify-between items-center p-2 bg-white/10 rounded-lg">
+                    <span className="font-medium">{t.windSpeed}:</span>
+                    <span className="text-blue-200">{weather.wind.speed} m/s</span>
                   </div>
                 </div>
               </div>
@@ -243,72 +244,72 @@ const Index = () => {
           </Card>
 
           {/* Countdown Timer */}
-          <Card className="bg-white/10 backdrop-blur-md border-white/20 p-6 text-white">
-            <div className="flex items-center justify-center mb-4">
-              <Timer className="w-8 h-8 mr-2 text-purple-400" />
-              <h2 className="text-2xl font-bold">{t.countdownTimer}</h2>
+          <Card className="bg-white/10 backdrop-blur-xl border-white/20 p-8 text-white shadow-2xl hover:bg-white/15 transition-all duration-300 group">
+            <div className="flex items-center justify-center mb-6">
+              <Timer className="w-10 h-10 mr-3 text-purple-400 group-hover:scale-110 transition-transform duration-300" />
+              <h2 className="text-3xl font-bold">{t.countdownTimer}</h2>
             </div>
 
             {!isActive && timeLeft === 0 ? (
-              <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-center">{t.setTimer}</h3>
-                <div className="grid grid-cols-3 gap-2">
+              <div className="space-y-6">
+                <h3 className="text-xl font-semibold text-center mb-4">{t.setTimer}</h3>
+                <div className="grid grid-cols-3 gap-3">
                   <div>
-                    <label className="block text-sm mb-1">{t.hours}</label>
+                    <label className="block text-sm mb-2 font-medium">{t.hours}</label>
                     <Input
                       type="number"
                       min="0"
                       max="23"
                       value={countdown.hours}
                       onChange={(e) => setCountdown({...countdown, hours: parseInt(e.target.value) || 0})}
-                      className="bg-white/20 border-white/30 text-white text-center"
+                      className="bg-white/20 border-white/30 text-white text-center focus:bg-white/25 transition-all duration-300"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm mb-1">{t.minutes}</label>
+                    <label className="block text-sm mb-2 font-medium">{t.minutes}</label>
                     <Input
                       type="number"
                       min="0"
                       max="59"
                       value={countdown.minutes}
                       onChange={(e) => setCountdown({...countdown, minutes: parseInt(e.target.value) || 0})}
-                      className="bg-white/20 border-white/30 text-white text-center"
+                      className="bg-white/20 border-white/30 text-white text-center focus:bg-white/25 transition-all duration-300"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm mb-1">{t.seconds}</label>
+                    <label className="block text-sm mb-2 font-medium">{t.seconds}</label>
                     <Input
                       type="number"
                       min="0"
                       max="59"
                       value={countdown.seconds}
                       onChange={(e) => setCountdown({...countdown, seconds: parseInt(e.target.value) || 0})}
-                      className="bg-white/20 border-white/30 text-white text-center"
+                      className="bg-white/20 border-white/30 text-white text-center focus:bg-white/25 transition-all duration-300"
                     />
                   </div>
                 </div>
                 <Button 
                   onClick={startTimer}
-                  className="w-full bg-green-600 hover:bg-green-700"
+                  className="w-full bg-green-600 hover:bg-green-700 py-3 text-lg font-semibold transition-all duration-300 hover:scale-105"
                 >
                   {t.start}
                 </Button>
               </div>
             ) : (
-              <div className="text-center space-y-4">
-                <div className="text-4xl font-mono font-bold">
+              <div className="text-center space-y-6">
+                <div className="text-5xl font-mono font-bold text-purple-200 tracking-wider p-6 bg-white/10 rounded-2xl">
                   {formatTime(timeLeft)}
                 </div>
-                <div className="flex gap-2">
+                <div className="flex gap-3">
                   <Button 
                     onClick={pauseTimer}
-                    className="flex-1 bg-yellow-600 hover:bg-yellow-700"
+                    className="flex-1 bg-yellow-600 hover:bg-yellow-700 py-3 text-lg font-semibold transition-all duration-300 hover:scale-105"
                   >
                     {isActive ? t.pause : t.start}
                   </Button>
                   <Button 
                     onClick={resetTimer}
-                    className="flex-1 bg-red-600 hover:bg-red-700"
+                    className="flex-1 bg-red-600 hover:bg-red-700 py-3 text-lg font-semibold transition-all duration-300 hover:scale-105"
                   >
                     {t.reset}
                   </Button>
@@ -319,10 +320,10 @@ const Index = () => {
         </div>
 
         {/* Footer */}
-        <footer className="text-center py-8">
-          <div className="bg-white/10 backdrop-blur-md rounded-lg p-4 inline-block border border-white/20">
-            <p className="text-white/80 flex items-center justify-center gap-2">
-              {t.madeWith} <Heart className="w-4 h-4 text-red-400 fill-current" /> {t.by}
+        <footer className="text-center py-12">
+          <div className="bg-white/10 backdrop-blur-xl rounded-2xl p-6 inline-block border border-white/20 shadow-xl">
+            <p className="text-white/90 flex items-center justify-center gap-2 text-lg font-medium">
+              {t.madeWith} <Heart className="w-5 h-5 text-red-400 fill-current animate-pulse" /> {t.by}
             </p>
           </div>
         </footer>

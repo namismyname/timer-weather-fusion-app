@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Clock, CloudRain, CloudSnow, Cloud, Sun, Timer, Search, Globe, Heart, MapPin } from 'lucide-react';
 import { Card } from '@/components/ui/card';
@@ -25,7 +24,9 @@ const translations = {
     timeUp: "Time's Up!",
     madeWith: "Made with",
     by: "by Lovable and ChatGPT",
-    selectTimezone: "Select Timezone"
+    selectTimezone: "Select Timezone",
+    eventName: "Event Name",
+    eventNamePlaceholder: "Enter event name..."
   },
   vi: {
     currentTime: "Thời Gian Hiện Tại",
@@ -45,7 +46,9 @@ const translations = {
     timeUp: "Hết Giờ!",
     madeWith: "Được tạo với",
     by: "bởi Lovable và ChatGPT",
-    selectTimezone: "Chọn Múi Giờ"
+    selectTimezone: "Chọn Múi Giờ",
+    eventName: "Tên Sự Kiện",
+    eventNamePlaceholder: "Nhập tên sự kiện..."
   }
 };
 
@@ -73,6 +76,7 @@ const Index = () => {
   const [language, setLanguage] = useState('en');
   const [selectedTimezone, setSelectedTimezone] = useState('Asia/Ho_Chi_Minh');
   const [isAnimating, setIsAnimating] = useState(false);
+  const [eventName, setEventName] = useState('');
 
   const t = translations[language];
 
@@ -286,7 +290,7 @@ const Index = () => {
               />
               <Button 
                 onClick={handleCitySearch}
-                className="bg-blue-600 hover:bg-blue-700 px-4 transition-all duration-300 hover:scale-105 hover:rotate-3"
+                className="bg-blue-600 hover:bg-blue-700 px-4 transition-all duration-300 hover:scale-105"
               >
                 <Search className={`w-5 h-5 ${isAnimating ? 'animate-spin' : ''}`} />
               </Button>
@@ -323,6 +327,19 @@ const Index = () => {
             {!isActive && timeLeft === 0 ? (
               <div className="space-y-6 animate-fade-in">
                 <h3 className="text-xl font-semibold text-center mb-4">{t.setTimer}</h3>
+                
+                {/* Event Name Input */}
+                <div className="animate-fade-in">
+                  <label className="block text-sm mb-2 font-medium">{t.eventName}</label>
+                  <Input
+                    type="text"
+                    placeholder={t.eventNamePlaceholder}
+                    value={eventName}
+                    onChange={(e) => setEventName(e.target.value)}
+                    className="bg-white/20 border-white/30 text-white placeholder-white/60 focus:bg-white/25 transition-all duration-300 focus:scale-105 mb-4"
+                  />
+                </div>
+
                 <div className="grid grid-cols-3 gap-3">
                   <div className="animate-slide-in-left">
                     <label className="block text-sm mb-2 font-medium">{t.hours}</label>
@@ -367,6 +384,13 @@ const Index = () => {
               </div>
             ) : (
               <div className="text-center space-y-6 animate-fade-in">
+                {/* Display Event Name if set */}
+                {eventName && (
+                  <div className="bg-white/10 rounded-lg p-3 mb-4 animate-slide-in-up">
+                    <h4 className="text-lg font-semibold text-purple-200">{eventName}</h4>
+                  </div>
+                )}
+                
                 <div className={`text-5xl font-mono font-bold text-purple-200 tracking-wider p-6 bg-white/10 rounded-2xl transition-all duration-300 ${timeLeft <= 10 && isActive ? 'animate-pulse bg-red-500/20 text-red-200' : ''}`}>
                   {formatTime(timeLeft)}
                 </div>
